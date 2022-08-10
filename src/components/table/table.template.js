@@ -2,10 +2,19 @@ const CODES = {
     A: 65,
     Z: 90,
 };
-function createCell(_, col) {
-    return `
-        <div class="cell" data-col="${col}" contenteditable></div>
-    `;
+
+function createCell(row) {
+    return function(_, col) {
+        return `
+            <div 
+                class="cell" 
+                data-col="${col}" 
+                data-id="${col}:${row}"
+                data-type="cell"
+                contenteditable
+            ></div>
+        `;
+    };
 }
 function toColumn(col, index) {
     return `
@@ -40,13 +49,13 @@ export function createTable(rowsCount = 15) {
         .map(toColumn)
         .join('');
     rows.push(createRow(null, cols));
-    for (let i = 0; i < rowsCount; i++) {
+
+    for (let row = 0; row < rowsCount; row++) {
         const cells = new Array(colsCount)
             .fill('')
-            .map(toChar)
-            .map(createCell)
+            .map(createCell(row))
             .join('');
-        rows.push(createRow(i + 1, cells));
+        rows.push(createRow(row + 1, cells));
     }
     return rows.join('');
 }
