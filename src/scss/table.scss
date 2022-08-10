@@ -54,7 +54,8 @@
         color: #111;
         white-space: nowrap;
         display: flex;
-        align-items: center;
+        align-items: baseline;
+        padding: 0.25rem;
         &.selected {
             border: none;
             outline: 2px solid $selected-cell-color;
